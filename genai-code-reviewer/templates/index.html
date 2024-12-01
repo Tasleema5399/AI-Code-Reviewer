@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Reviewer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <img src="/static/banner.png" alt="AI Code Reviewer Banner" class="banner">
+        <div class="header-text">
+            <h1>Welcome to the AI Code Reviewer</h1>
+            <p>Transform your coding experience with AI-powered feedback and suggestions.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="form-section">
+            <h2>Review Your Code</h2>
+            <form id="reviewForm">
+                <label for="code">Paste your code snippet below:</label><br>
+                <textarea id="code" name="code" rows="10" cols="50" placeholder="Enter your code here..." required></textarea><br>
+                <button type="submit">Review Code</button>
+            </form>
+        </section>
+
+        <section id="response-section">
+            <h2>AI Suggestions</h2>
+            <div id="response" class="response-box">
+                <p>Submit your code to see AI-generated feedback.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 AI Code Reviewer | Built with 💻 and 🤖</p>
+    </footer>
+
+    <script>
+        document.getElementById('reviewForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const code = document.getElementById('code').value;
+
+            const response = await fetch('/review', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ code })
+            });
+            
+            const result = await response.json();
+            if (result.status === 'success') {
+                document.getElementById('response').innerHTML = `<p><strong>Review:</strong> ${result.review}</p>`;
+            } else {
+                document.getElementById('response').innerHTML = `<p><strong>Error:</strong> ${result.message}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
