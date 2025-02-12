@@ -6,7 +6,7 @@ import json
 app = Flask(__name__)
 
 # Hugging Face API Key Configuration
-HF_API_KEY = "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"  # Replace with your Hugging Face API key
+HF_API_KEY = "**************"  # Replace with your Hugging Face API key
 
 # Define the model you want to use
 HF_MODEL = "codeparrot/codeparrot-small"  # You can replace this with any suitable model on Hugging Face
